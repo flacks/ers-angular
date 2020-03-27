@@ -1,0 +1,32 @@
+<div class="card border-dark mx-auto" style="max-width: 18rem;">
+  <div class="card-header"><h5>Reimbursement request</h5></div>
+  <div class="card-body text-dark">
+    <div class="row justify-content-center">
+      <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="amount" formControlName="amount">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" name="description" id="description" formControlName="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <select class="form-control" name="type" id="type" formControlName="type">
+            <option value="1">Lodging</option>
+            <option value="2">Travel</option>
+            <option value="3">Food</option>
+            <option value="4">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="receipt">Receipt</label>
+          <input type="file" class="form-control" name="receipt" id="receipt" formControlName="receipt" (change)="onFileChange($event)">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 mr-1">Submit</button>
+        <button class="btn btn-secondary mb-2 ml-1" routerLink="/reimbursements/view">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

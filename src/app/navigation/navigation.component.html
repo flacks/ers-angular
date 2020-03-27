@@ -1,0 +1,4 @@
+<span class="float-right my-1">
+  <button *ngIf="(isLoggedIn | async)" type="button" class="btn btn-secondary btn-sm mr-1">Logged in as: {{ authService.getUsername() }}</button>
+  <a *ngIf="(isLoggedIn | async)"><button type="button" class="btn btn-dark btn-sm ml-1" (click)="authService.logout()">Logout</button></a>
+</span>

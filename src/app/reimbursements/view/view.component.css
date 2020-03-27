@@ -1,0 +1,9 @@
+.decisionButtons:hover {
+  cursor: pointer;
+}
+
+.receipt {
+  display: block;
+  horiz-align: center;
+  max-height: 10rem;
+}
