@@ -1,0 +1,55 @@
+<div class="container">
+  <span class="float-left my-2">
+    <a (click)="doFilter('All')"><button type="button" class="btn btn-outline-warning btn-sm mr-1">All</button></a>
+    <a (click)="doFilter('Pending')"><button type="button" class="btn btn-outline-info btn-sm mx-1">Pending</button></a>
+    <a (click)="doFilter('Approved')"><button type="button" class="btn btn-outline-success btn-sm mx-1">Approved</button></a>
+    <a (click)="doFilter('Denied')"><button type="button" class="btn btn-outline-danger btn-sm ml-1">Denied</button></a>
+  </span>
+  <span class="float-right my-2">
+    <a routerLink="/reimbursements/create"><button type="button" class="btn btn-outline-dark btn-sm">Create Reimbursement</button></a>
+  </span>
+</div>
+
+<div class="container-fluid">
+  <table class="table table-sm table-bordered table-hover table-responsive">
+    <tr>
+      <th>ID</th>
+      <th>Amount</th>
+      <th>Submitted</th>
+      <th>Resolved</th>
+      <th>Description</th>
+      <th>Receipt</th>
+      <th>Author</th>
+      <th>Resolver</th>
+      <th>Status</th>
+      <th>Type</th>
+    </tr>
+    <tbody>
+      <tr *ngFor="let reimbursement of reimbursementDisplay">
+        <td>{{ reimbursement.reimbId }}</td>
+        <td>{{ reimbursement.amount | currency:"USD" }}</td>
+        <td>{{ reimbursement.submitted | date:"medium" }}</td>
+        <td>{{ reimbursement.resolved | date:"medium" }}</td>
+        <td>{{ reimbursement.description }}</td>
+        <td *ngIf="reimbursement.receipt != null; else emptyTableData">
+          <img class="img-thumbnail receipt mx-auto" src="{{ reimbursement.receipt }}">
+          <button class="btn btn-outline-dark btn-sm mt-1" (click)="enlargeReceipt(reimbursement.receipt)">Enlarge</button>
+        </td>
+        <ng-template #emptyTableData><td></td></ng-template>
+        <td>{{ reimbursement.author.firstName + ' ' + reimbursement.author.lastName }}</td>
+        <td *ngIf="reimbursement.resolver != null; else decisionOptions">
+          {{ reimbursement.resolver.firstName + ' ' + reimbursement.resolver.lastName }}
+        </td>
+        <ng-template #decisionOptions>
+          <td *ngIf="(isManager) && Status[reimbursement.statusId] != 'Denied'; else emptyTableData">
+            <img class="decisionButtons" src="assets/icons/check_circle-black-18dp.svg" alt="Black checkmark in a circle" (click)="approveReimbursement(reimbursement)">
+            <img class="decisionButtons" src="assets/icons/highlight_off-black-18dp.svg" alt="Black X mark in a circle" (click)="denyReimbursement(reimbursement)">
+          </td>
+          <ng-template #emptyTableData><td></td></ng-template>
+        </ng-template>
+        <td>{{ Status[reimbursement.statusId] }}</td>
+        <td>{{ Type[reimbursement.typeId] }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
